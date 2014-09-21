@@ -1,0 +1,3 @@
+---
+- name: Install pip
+  apt: pkg=python-pip={{ pip_version }} state=present

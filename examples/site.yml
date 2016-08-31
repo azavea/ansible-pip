@@ -1,9 +1,0 @@
----
-- hosts: all
-
-  pre_tasks:
-    - name: Update APT cache
-      apt: update_cache=yes
-
-  roles:
-    - { role: "azavea.pip" }

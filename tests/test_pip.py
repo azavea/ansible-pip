@@ -1,37 +1,26 @@
 import pytest
-import re
 
 
 @pytest.fixture()
-def GetCandidateVersion(Command):
-    def CandidateVersion(pkg):
-        """ Check the output of "apt-cache poicy <package-name>"
-        to determine the candidate version for a package.
-
-        Args:
-            Command - module to run apt-cache policy
-            pkg - name of the package you want to check candidates for
-
-        Returns:
-            Candidate version for pkg
-        """
-        policy = Command.check_output("apt-cache policy {}".format(pkg))
-        candidates = re.search("Candidate: (.*)", policy)
-        if candidates:
-            return candidates.groups(0)[0]
-        else:
-            return ""
-    return CandidateVersion
+def AnsibleDefaults(Ansible):
+    """ Load default variables into dictionary.
+    Args:
+        Ansible - Requires the ansible connection backend.
+    """
+    return Ansible("include_vars", "./defaults/main.yml")["ansible_facts"]
 
 
-def test_pip_exists(Package, GetCandidateVersion):
+def test_pip_exists(Command, AnsibleDefaults):
     """ Ensure the candidate version of pip is installed.
 
     Args:
-        Package - Module to determine package install status and version
-        GetPolicy - Get version of candidate package
+        Command - Module to determine package install status and version
+        GetAnsibleDefaults - Get default version of the package
     """
-    pip = Package("python-pip")
-    pip_candidate_version = GetCandidateVersion("python-pip")
-    assert pip.is_installed
-    assert pip.version == pip_candidate_version
+    pip_version_check = Command("pip --version")
+
+    # We only care about the major.minor versions
+    pip_version = AnsibleDefaults["pip_version"].split("*")[0]
+
+    assert pip_version_check.rc == 0
+    assert pip_version in pip_version_check.stdout

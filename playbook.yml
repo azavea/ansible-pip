@@ -11,6 +11,7 @@
     - name: Check Ubuntu release
       raw: cat /etc/lsb-release | grep DISTRIB_RELEASE | cut -d "=" -f2
       register: ubuntu_release
+      changed_when: false
 
     - debug: msg="Running Ubuntu version {{ ubuntu_release.stdout|float }}"
 
@@ -20,10 +21,12 @@
     - name: Update APT cache
       raw: apt-get update
       become: True
+      changed_when: false
 
     - name: Install python
       raw: apt-get install -yq python
       become: True
+      changed_when: false
       when: "{{ ubuntu_release.stdout| version_compare('16.04', '>=') }}"
 
     # Gather facts once ansible dependencies are installed

@@ -1,10 +1,13 @@
 ---
-ansible:
-  verbose:
-  sudo: True
-  group_vars:
-    all:
-      - pip_version: "*"
+molecule:
+  test:
+    sequence:
+      - destroy
+      - syntax
+      - create
+      - converge
+      - idempotence
+      - verify
 
 vagrant:
   platforms:

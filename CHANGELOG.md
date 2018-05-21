@@ -1,3 +1,7 @@
+## 1.0.1
+
+-  Prevent `get-pip.py` download when it is already present.
+
 ## 1.0.0
 
 - Install pip using `get-pip.py` instead of `apt`. See Install pip, setuptools, and wheel in the [pip documentation](https://packaging.python.org/installing/#install-pip-setuptools-and-wheel) for more information.

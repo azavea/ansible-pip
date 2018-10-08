@@ -6,7 +6,7 @@
   changed_when: false
 
 - name: Download get-pip.py
-  get_url: url=https://bootstrap.pypa.io/get-pip.py
+  get_url: url=https://bootstrap.pypa.io/{{ (pip_get_pip_version == 'latest') | ternary('', pip_get_pip_version) }}/get-pip.py
            dest=/tmp/get-pip.py
   when: pip_version_output | failed or not pip_version_output.stdout | search(pip_version)
 

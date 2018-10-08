@@ -1,3 +1,7 @@
+## 1.1.0
+
+- Add `pip_get_pip_version` to support older `get-pip.py` releases. See version history at https://bootstrap.pypa.io.
+
 ## 1.0.1
 
 -  Prevent `get-pip.py` download when it is already present.

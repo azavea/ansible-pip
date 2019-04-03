@@ -1,10 +1,16 @@
+## 2.0.0
+
+- Add `pip_executable` variable to support Python 2 and 3 installations.
+- Removed deprecated tests-as-filters in `when` directives.
+- Updated minimum supported Ansible version to 2.5.x.
+
 ## 1.1.0
 
 - Add `pip_get_pip_version` to support older `get-pip.py` releases. See version history at https://bootstrap.pypa.io.
 
 ## 1.0.1
 
--  Prevent `get-pip.py` download when it is already present.
+- Prevent `get-pip.py` download when it is already present.
 
 ## 1.0.0
 

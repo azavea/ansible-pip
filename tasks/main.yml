@@ -19,7 +19,7 @@
 # the desired versions of pip aren't installed
 # The regular expression extracts '9.0' out of '9.0.*'
 - name: Install pip
-  command: "python get-pip.py pip=={{ pip_version }}"
+  command: "{{ ansible_python_interpreter if ansible_python_interpreter is defined else 'python' }} get-pip.py pip=={{ pip_version }}"
   when: "(pip_version_output is failed) or not pip_version_output.stdout is search('pip ' + pip_version)"
   args:
     chdir: /tmp

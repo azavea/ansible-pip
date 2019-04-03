@@ -1,20 +1,25 @@
 ---
 - name: Get installed pip version
-  command: pip --version
+  command: "{{ pip_executable }} --version"
   register: pip_version_output
   ignore_errors: yes
   changed_when: false
 
 - name: Download get-pip.py
-  get_url: url=https://bootstrap.pypa.io/{{ (pip_get_pip_version == 'latest') | ternary('', pip_get_pip_version) }}/get-pip.py
-           dest=/tmp/get-pip.py
-  when: pip_version_output | failed or not pip_version_output.stdout | search(pip_version)
+  vars:
+      pip_version_url: "{{ (pip_get_pip_version == 'latest') | ternary('', pip_get_pip_version) }}"
+      required_vars:
+          - pip_get_pip_version
+  get_url:
+      url: 'https://bootstrap.pypa.io/{{ pip_version_url }}/get-pip.py'
+      dest: /tmp/get-pip.py
+  when: (pip_version_output is failed) or not pip_version_output.stdout is search(pip_version)
 
 # Install pip if it's not already installed, or if
 # the desired versions of pip aren't installed
 # The regular expression extracts '9.0' out of '9.0.*'
 - name: Install pip
   command: "python get-pip.py pip=={{ pip_version }}"
-  when:  pip_version_output | failed or not pip_version_output.stdout | search('pip ' + pip_version)
+  when: "(pip_version_output is failed) or not pip_version_output.stdout is search('pip ' + pip_version)"
   args:
     chdir: /tmp

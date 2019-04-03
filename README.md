@@ -6,6 +6,7 @@ An Ansible role for installing [pip](https://pip.pypa.io/en/latest/).
 
 - `pip_version` - pip version
 - `pip_get_pip_version` - get_pip.py version
+- `pip_executable` -  the executable to run to check pip's version
 
 ## Testing
 Tests are done using [molecule](http://molecule.readthedocs.io/). To run the test suite, install molecule and its dependencies and run ` molecule test` from the folder containing molecule.yml. To add additional tests, add a [testinfra](http://testinfra.readthedocs.org/) python script in the [tests](./tests/) directory, or add a function to [test_pip.py](./tests/test_scala.py). Information about available Testinfra modules is available [here](http://testinfra.readthedocs.io/en/latest/modules.html).

@@ -1,3 +1,7 @@
+## 2.0.1
+
+- Update get-pip URL.
+
 ## 2.0.0
 
 - Add `pip_executable` variable to support Python 2 and 3 installations.
